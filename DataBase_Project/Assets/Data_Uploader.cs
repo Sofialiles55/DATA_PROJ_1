@@ -5,7 +5,8 @@ using UnityEngine.Networking;
 
 public class Data_Uploader : MonoBehaviour
 {
-    public string value;
+    public string characterName;
+    public int id;
     void Start()
     {
         StartCoroutine(Upload());
@@ -14,7 +15,8 @@ public class Data_Uploader : MonoBehaviour
     IEnumerator Upload()
     {
         WWWForm form = new WWWForm();
-        form.AddField("Test", value);
+        form.AddField("Id", id);
+        form.AddField("Name", characterName);
 
         UnityWebRequest www = UnityWebRequest.Post("https://citmalumnes.upc.es/~fernandofg2/Receive_Data.php", form);
         yield return www.SendWebRequest();
@@ -27,6 +29,7 @@ public class Data_Uploader : MonoBehaviour
         {
             Debug.Log("Form upload complete!");
             Debug.Log(www.downloadHandler.text);
+            
         }
     }
 }
