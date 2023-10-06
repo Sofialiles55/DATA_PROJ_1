@@ -293,8 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30ce8bb76887c84f8c14baa1dc3f98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Marian
-  id: 43
 --- !u!4 &799059937
 Transform:
   m_ObjectHideFlags: 0
