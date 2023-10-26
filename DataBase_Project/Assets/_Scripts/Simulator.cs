@@ -14,7 +14,7 @@ public class Simulator : MonoBehaviour
 
     private DateTime _currentDate;
 
-    public int MaxPlayers=100;
+    public int MaxPlayers;
     public float ReplayChance => _currentDate.Month < 6 ? 0.7f: 0.95f;
     public float BuyProbability = 0.1f;
 
@@ -55,7 +55,12 @@ public class Simulator : MonoBehaviour
             int rdm = Random.Range(0, coutryNames.Length);
             Countries.Add(((AllCountries)rdm).ToString());
         }
-        MakeOnePlayer();
+
+        for (int i = 0; i < MaxPlayers; i++)
+        {
+            MakeOnePlayer();
+        }
+       
        
      
     }
@@ -83,6 +88,7 @@ public class Simulator : MonoBehaviour
         int rdm = Random.Range(0, Countries.Count);
         string country = Countries[rdm];
 
+       
         OnNewPlayer?.Invoke(name, country, dateTime);
     }
 
