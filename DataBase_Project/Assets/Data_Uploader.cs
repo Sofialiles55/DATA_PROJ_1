@@ -61,6 +61,7 @@ public class Data_Uploader : MonoBehaviour
             Debug.Log("Form upload complete!");
             Debug.Log(www.downloadHandler.text);
 
+            
             CallbackEvents.OnAddPlayerCallback.Invoke(8);
             
         }

@@ -26,6 +26,8 @@ $sql = "INSERT INTO `Players`(`Name`, `Country`, `Date`) VALUES ('$name','$count
 
 if ($connection->query($sql) === TRUE) {
     echo "New record created successfully";
+    $last_id = $connection->insert_id;
+    echo $last_id;
   } else {
     echo "Error: " . $sql . "<br>" . $connection->error;
   }
