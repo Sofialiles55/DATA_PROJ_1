@@ -3,11 +3,17 @@
 $name = $_POST["Name"];
 $country = $_POST["Country"];
 $date = $_POST["Date"];
+$startSession=$_POST["Start Session"];
+$endSession=$_POST["End Session"];
+$purchases=$_POST["Purchases made"]
+
 
 print "Name entered: $name ";
 print "Country entered: $country ";
 print "Date entered: $date ";
-
+print "sessionStart entered: $startSession";
+print "sessionEnd entered: $endSession";
+print "Purchases entered: $purchases";
 
 $servername = "localhost:3306";
 $username = "fernandofg2";
@@ -28,8 +34,10 @@ if ($connection->query($sql) === TRUE) {
     echo "New record created successfully";
     $last_id = $connection->insert_id;
     echo $last_id;
-  } else {
-    echo "Error: " . $sql . "<br>" . $connection->error;
+
+    $sql ="INSERT INTO `Sessions`(`userId`, `startSession`, `endSession`)  VALUES ('$userId', '$startSession', '$endSession')";
+
+    $sql = "INSERT INTO `Purchases` (`userId`, `purchases`) VALUES('$userId', '$purchases')";
   }
   
   $connection->close();
