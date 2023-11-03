@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
+//using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.Networking;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
@@ -156,7 +156,7 @@ public class Data_Uploader : MonoBehaviour
         else
         {
             Debug.Log("Buy form upload complete!");
-            Debug.Log(www.downloadHandler.text);
+            //Debug.Log(www.downloadHandler.text);
 
             uint.TryParse(www.downloadHandler.text, out purchaseId);
 

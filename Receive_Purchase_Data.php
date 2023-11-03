@@ -2,7 +2,7 @@
 
 $userId = $_POST["User_ID"];
 $sessionId=$_POST["Session_ID"];
-$item=$_POST["Item"];
+$itemId=$_POST["Item"];
 $buyDate=$_POST["Buy_Date"];
 
 
@@ -19,7 +19,9 @@ if($connection->connect_error)
     die("Connection failed: " . $connection->connect_error);
 }
 
-$sql = "INSERT INTO `Purchases`(`userId`, `sessionId`, `itemId`, `buyDate`) VALUES('$userId','$sessionId, '$item', '$buyDate')";
+//$sql = "INSERT INTO `Purchases`(`itemId`) VALUES('$item')";
+$sql = "INSERT INTO `Purchases`(`userId`, `sessionId`, `itemId`, `buyDate`) VALUES('$userId','$sessionId', '$itemId', '$buyDate')";
+//$sql = "INSERT INTO `Players`(`Name`, `Country`, `Date`) VALUES ('$name','$country', '$date')";
 
 if ($connection->query($sql) == TRUE) {
 
