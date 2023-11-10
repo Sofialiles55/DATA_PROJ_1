@@ -39,11 +39,11 @@ public class Data_Uploader : MonoBehaviour
     }
     private void SendSessionStart(DateTime date)
     {
-        StartCoroutine(UploadSession(date, false));
+        StartCoroutine(UploadStartSession(date));
     }
     private void SendSessionClosing(DateTime date)
     {
-        StartCoroutine(UploadSession(date, true));
+        StartCoroutine(UploadEndSession(date));
     }
 
     void Start()
@@ -75,67 +75,72 @@ public class Data_Uploader : MonoBehaviour
         else
         {
             Debug.Log("Player form upload complete!");
-            //Debug.Log(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
 
             
             uint.TryParse(www.downloadHandler.text, out userId);
+            
             CallbackEvents.OnAddPlayerCallback.Invoke(userId);
             
         }
     }
-    IEnumerator UploadSession(DateTime uploadedDate, bool sessionInProgress)
+    IEnumerator UploadStartSession(DateTime uploadedDate)
     {
         WWWForm form = new WWWForm();
         UnityWebRequest www;
+        form.AddField("User_ID", userId.ToString());
+        form.AddField("Start_Session", uploadedDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
 
-        if (!sessionInProgress)
+
+        www = UnityWebRequest.Post("https://citmalumnes.upc.es/~fernandofg2/Receive_Session_Data.php", form);
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
         {
-            form.AddField("User_ID", userId.ToString());
-            form.AddField("Start_Session", uploadedDate.ToString("yyyy-MM-dd HH:mm:ss"));
-            
-
-
-             www = UnityWebRequest.Post("https://citmalumnes.upc.es/~fernandofg2/Receive_Session_Data.php", form);
-
-            yield return www.SendWebRequest();
-
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Sessions form upload complete!");
-                //Debug.Log(www.downloadHandler.text);
-                uint.TryParse(www.downloadHandler.text, out sessionId);
-
-                CallbackEvents.OnNewSessionCallback.Invoke(sessionId);
-
-            }
+            Debug.Log(www.error);
         }
         else
         {
-            form.AddField("User_ID", userId.ToString());
-            form.AddField("End_Session", uploadedDate.ToString("yyyy-MM-dd HH:mm:ss"));         
-            form.AddField("Session_ID", sessionId.ToString());
+            // Debug.Log("Sessions form upload complete!");
+            // Debug.Log(www.downloadHandler.text);
+            uint.TryParse(www.downloadHandler.text, out sessionId);
 
-           
-            www = UnityWebRequest.Post("https://citmalumnes.upc.es/~fernandofg2/Receive_Close_Session_Data.php", form);
+            CallbackEvents.OnNewSessionCallback.Invoke(sessionId);
 
-
-           
-            yield return www.SendWebRequest();
-
-            //Debug.Log(www.downloadHandler.text);
         }
 
-        
+    }
+    IEnumerator UploadEndSession(DateTime uploadedDate)
+    {
+        WWWForm form = new WWWForm();
+        UnityWebRequest www;
+        form.AddField("User_ID", userId.ToString());
+        form.AddField("End_Session", uploadedDate.ToString("yyyy-MM-dd HH:mm:ss"));
+        form.AddField("Session_ID", sessionId.ToString());
 
-        
-        
 
-       
+        www = UnityWebRequest.Post("https://citmalumnes.upc.es/~fernandofg2/Receive_Close_Session_Data.php", form);
+
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            // Debug.Log("Sessions form end complete!");
+            // Debug.Log(www.downloadHandler.text);
+            //uint.TryParse(www.downloadHandler.text, out sessionId);
+
+            CallbackEvents.OnEndSessionCallback.Invoke(sessionId);
+
+        }
+
+        //Debug.Log(www.downloadHandler.text);
     }
     IEnumerator UploadItem(int item, DateTime date)
     {
@@ -155,7 +160,7 @@ public class Data_Uploader : MonoBehaviour
         }
         else
         {
-            Debug.Log("Buy form upload complete!");
+            //Debug.Log("Buy form upload complete!");
             //Debug.Log(www.downloadHandler.text);
 
             uint.TryParse(www.downloadHandler.text, out purchaseId);

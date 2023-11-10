@@ -26,7 +26,7 @@ namespace Lexic
                 {
                     "start",   new List<string>(){ 
                                                    "Ad", "Aer", "Ar", "Bel", "Bet", "Beth",
-                                                   "Ce'N", "Cyr", "Eilin", "El", "Em", "Emel",
+                                                   "CeN", "Cyr", "Eilin", "El", "Em", "Emel",
                                                    "G", "Gl", "Glor", "Is", "Isl", "Iv", "Lay",
                                                    "Lis", "May", "Ner", "Pol", "Por", "Sal",
                                                    "Sil", "Vel", "Vor", "X", "Xan", "Xer",

@@ -12,8 +12,6 @@ $database = "fernandofg2";
 $connection = new mysqli($servername, $username, $password, $database);
 
 
-echo $endSession;
-
 if($connection->connect_error)
 {
     die("Connection failed: " . $connection->connect_error);
@@ -22,12 +20,13 @@ $sql = "UPDATE `Sessions` SET `endSession`= '$endSession' WHERE `sessionId`='$se
 
 if ($connection->query($sql) == TRUE) {
  
-  echo "Hecho"; 
+  echo $endSession;
 
  } 
+ else{
+  echo "could not update";
+ }
 
-
-  
   $connection->close();
 
 ?>

@@ -56,11 +56,7 @@ public class Simulator : MonoBehaviour
             Countries.Add(((AllCountries)rdm).ToString());
         }
 
-        for (int i = 0; i < MaxPlayers; i++)
-        {
-            MakeOnePlayer();
-        }
-       
+        MakeOnePlayer();
        
      
     }
